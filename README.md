@@ -1,0 +1,2 @@
+# Guest-Experience-Analytics-Topic-Modelling-Sentiment-Intelligence-System-Project
+The project aims to develop a Guest Experience Analytics and Sentiment Intelligence System for Montra Hospitality Intel, using NLP, topic modelling, sentiment analysis, and machine learning to extract key themes, assess guest sentiment, and identify recurring positive and negative feedback to support data-driven business decisions.
