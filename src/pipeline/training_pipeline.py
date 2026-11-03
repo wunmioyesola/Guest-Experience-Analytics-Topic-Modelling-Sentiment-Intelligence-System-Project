@@ -27,4 +27,4 @@ def Train_model():
         raise MyException(e, sys)
 
 
-Train_model()
+# Train_model()

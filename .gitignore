@@ -9,6 +9,9 @@ __pycache__/
 # env
 montra_env/
 results/
+Testing_data_sample.csv
+analyze_result.py
+montra-connection-key.pem
 
 # Distribution / packaging
 .Python

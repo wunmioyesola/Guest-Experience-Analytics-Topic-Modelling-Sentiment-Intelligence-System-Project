@@ -1,22 +1,27 @@
 import pandas as pd
-from sqlalchemy import create_engine, text
-
-from config.database_config import DATABASE_URL
-
-from src.logger import configure_logger
-from src.exception import MyException
-
 import os
 import sys
 
+
+from sqlalchemy import create_engine, text
+from dotenv import load_dotenv
+load_dotenv(override=True)
+
+# from config.database_config import DATABASE_URL
+
+from src.logger import configure_logger
 logging = configure_logger()
+
+from src.exception import MyException
 
 class DataIngestion:
     def __init__(self):
         self.engine = create_engine(
-            DATABASE_URL,
+            os.getenv("DATABASE_URL"),
+            pool_pre_ping= True,
+            pool_recycle= 1800
             poolclass=None,
-            connect_args={"sslmode": "require","connect_timeout": 10}
+            #connect_args={"sslmode": "require","connect_timeout": 10}
         )
 
     def test_connection(self):
@@ -70,19 +75,23 @@ class DataIngestion:
         except Exception as e:
             logging.error(f"error occured while merging the dataset {e}")
             raise MyException(e, sys)
+        finally:
+            self.engine.dispose()
+
+
 
 def data_loader():
-
-    # Database connection
-    # ingestion = DataIngestion()
-    # customer_review_data = ingestion.data_merger()
+    ingestion = DataIngestion()
+    if not ingestion.test_connection():
+        raise SystemExit("unable to connect to the database")
+    customer_review_data = ingestion.data_merger()
 
     # 100 Sample data for testing model training ppeline
-    customer_review_data = pd.read_csv(r"C:/Users/USER/Downloads/Guest-Experience-Analytics-Topic-Modelling-Sentiment-Intelligence-System-Project/Testing_data_sample.csv")
-
-    logging.info(customer_review_data.head())        
+    # customer_review_data = pd.read_csv(r"C:/Users/USER/Downloads/Guest-Experience-Analytics-Topic-Modelling-Sentiment-Intelligence-System-Project/Testing_data_sample.csv")
+    
     return customer_review_data
 
+    # data_loader()
  
 
 
