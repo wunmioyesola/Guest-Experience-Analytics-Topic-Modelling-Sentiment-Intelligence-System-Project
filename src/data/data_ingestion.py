@@ -19,20 +19,21 @@ class DataIngestion:
         self.engine = create_engine(
             os.getenv("DATABASE_URL"),
             pool_pre_ping= True,
-            pool_recycle= 1800
+            pool_recycle= 1800,
             poolclass=None,
             #connect_args={"sslmode": "require","connect_timeout": 10}
         )
 
     def test_connection(self):
-        try:
+        # try:
             with self.engine.connect() as connection:
                 result = connection.execute(text("SELECT 1"))
                 print("Database response:", result.fetchone())
                 print("Successfully connected to Neon")
+                return True
 
-        except Exception as e:
-            print("Connection failed:", repr(e))
+        # except Exception as e:
+            # print("Connection failed:", repr(e))
 
     def load_table(self, table_name: str) -> pd.DataFrame:
         query = text(f"SELECT * FROM {table_name}")

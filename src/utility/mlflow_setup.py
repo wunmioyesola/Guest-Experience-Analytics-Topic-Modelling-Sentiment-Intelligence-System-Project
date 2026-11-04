@@ -29,7 +29,7 @@ def setup_mlflow_connection():
     repo_owner = DAGSHUB_USERNAME
     repo_name = DAGSHUB_REPO
 
-    mlflow.set_tracking_uri(f"{dagshub_url}/{repo_owner}/{repo_owner}.mlflow")
+    mlflow.set_tracking_uri(f"{dagshub_url}/{repo_owner}/{repo_name}.mlflow")
 
-    set experiment_name
+    experiment_name = "montra-backend"
     mlflow.set_experiment(experiment_name)
